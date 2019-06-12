@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Getting> charities = response.body();
 
-                //Itterate through responses and append data to the View
+                //Iterate through responses and append data to the View
                 for(Getting charity : charities) {
                     String content = "";
                     content += "ID: " + charity.getId() + "\n";
