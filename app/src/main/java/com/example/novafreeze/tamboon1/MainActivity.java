@@ -45,7 +45,16 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Getting> charities = response.body();
 
+                //Itterate through responses and append data to the View
+                for(Getting charity : charities) {
+                    String content = "";
+                    content += "ID: " + charity.getId() + "\n";
+                    content += "Name: " + charity.getName() + "\n";
+                    content += "Logo: " + charity.getLogo_url() + "\n\n";
 
+                    textViewResult.append(content);
+
+                }
 
             }
 
