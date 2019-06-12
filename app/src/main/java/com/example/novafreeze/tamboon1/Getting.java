@@ -1,22 +1,33 @@
 package com.example.novafreeze.tamboon1;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class Getting {
 
-    private int id;
+    @SerializedName("data")
+    public List<Data> data = null;
 
-    private String name;
+    public class Data {
 
-    private String logo_url;
+        private int id;
 
-    public int getId() {
-        return id;
-    }
+        private String name;
 
-    public String getName() {
-        return name;
-    }
+        private String logo_url;
 
-    public String getLogo_url() {
-        return logo_url;
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getLogo_url() {
+            return logo_url;
+        }
+
     }
 }

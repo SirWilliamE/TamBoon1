@@ -30,23 +30,25 @@ public class MainActivity extends AppCompatActivity {
         CharitiesAPI CharitiesAPI = retrofit.create(CharitiesAPI.class);
 
         //Retrofit creates the implementation for this method
-        Call<List<Getting>> call = CharitiesAPI.getCharities();
+        Call<Getting> call = CharitiesAPI.getCharities();
 
 
         //Retrofit provides this method for us to call on a background thread
-        call.enqueue(new Callback<List<Getting>>() {
+        call.enqueue(new Callback<Getting>() {
             @Override
-            public void onResponse(Call<List<Getting>> call, Response<List<Getting>> response) {
+            public void onResponse(Call<Getting> call, Response<Getting> response) {
 
                 if (!response.isSuccessful()) {
                     textViewResult.setText("Error Code: " + response.code());
                     return;
                 }
 
-                List<Getting> charities = response.body();
+                Getting charities = response.body();
+
+                List<Getting.Data> DataList = charities.data;
 
                 //Iterate through responses and append data to the View
-                for(Getting charity : charities) {
+                for(Getting.Data charity : DataList) {
                     String content = "";
                     content += "ID: " + charity.getId() + "\n";
                     content += "Name: " + charity.getName() + "\n";
@@ -55,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
                     textViewResult.append(content);
 
                 }
-
             }
 
             @Override
-            public void onFailure(Call<List<Getting>> call, Throwable t) {
+            public void onFailure(Call<Getting> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
