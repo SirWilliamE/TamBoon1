@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        theListView = (ListView) findViewById(R.id.list_view_result);
+        theListView = findViewById(R.id.list_view_result);
 
         getCharities();
 
