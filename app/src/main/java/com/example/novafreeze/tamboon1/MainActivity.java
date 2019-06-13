@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     private void getCharities() {
 
         // Set up the ListView Adapter
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Getting.Data> DataList = charities.data;
 
-                // Iterate through responses and append data to the View
+                // Iterate through responses and add data to the View
                 for(Getting.Data charity : DataList) {
                     String content = "";
                     content += "ID: " + charity.getId() + "\n";

@@ -3,12 +3,11 @@ package com.example.novafreeze.tamboon1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,6 +20,7 @@ public class MakingDonation extends AppCompatActivity {
     private EditText cardNumber;
     private EditText donationAmount;
     private Button submitButton;
+    private ProgressBar spinner;
 
     private int theCardNumber;
     private int theDonationAmount;
@@ -31,6 +31,10 @@ public class MakingDonation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_making_donation);
 
+        spinner = findViewById(R.id.progressBar);
+
+        spinner.setVisibility(View.GONE);
+
         cardNumber = findViewById(R.id.cardNumber);
         donationAmount = findViewById(R.id.donationAmount);
         name = findViewById(R.id.name);
@@ -39,13 +43,15 @@ public class MakingDonation extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                spinner.setVisibility(View.VISIBLE);
+
                 makeDonation();
 
                 Intent intent = new Intent(MakingDonation.this, SuccessActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 
     private void makeDonation() {
@@ -53,7 +59,6 @@ public class MakingDonation extends AppCompatActivity {
         theCardNumber = Integer.parseInt(String.valueOf(cardNumber.getText()));
         theDonationAmount = Integer.parseInt(String.valueOf(donationAmount.getText()));
         custName = name.toString();
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://virtserver.swaggerhub.com/chakritw/tamboon-api/1.0.0/")
@@ -93,5 +98,4 @@ public class MakingDonation extends AppCompatActivity {
         });
 
     }
-
 }
