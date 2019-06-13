@@ -16,14 +16,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MakingDonation extends AppCompatActivity {
 
+    private EditText name;
     private EditText cardNumber;
     private EditText donationAmount;
     private Button submitButton;
+
+    private int theCardNumber;
+    private int theDonationAmount;
+    private String custName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_making_donation);
+
+        cardNumber = (EditText) findViewById(R.id.cardNumber);
+        donationAmount = (EditText) findViewById(R.id.donationAmount);
+        name = (EditText) findViewById(R.id.name);
 
         submitButton = (Button) findViewById(R.id.button);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -33,8 +42,6 @@ public class MakingDonation extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 
@@ -43,6 +50,11 @@ public class MakingDonation extends AppCompatActivity {
 
     private void makeDonation() {
 
+        theCardNumber = Integer.parseInt(String.valueOf(cardNumber.getText()));
+        theDonationAmount = Integer.parseInt(String.valueOf(donationAmount.getText()));
+        custName = name.toString();
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://virtserver.swaggerhub.com/chakritw/tamboon-api/1.0.0/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -50,7 +62,7 @@ public class MakingDonation extends AppCompatActivity {
 
         CharitiesAPI CharitiesAPI = retrofit.create(CharitiesAPI.class);
 
-        Donation donation = new Donation("John Doe", "tokn_test_deadbeef", 100000);
+        Donation donation = new Donation(custName, "tokn_test_deadbeef", theDonationAmount);
 
         Call<Donation> donationCall = CharitiesAPI.makeDonation(donation);
 
@@ -59,9 +71,7 @@ public class MakingDonation extends AppCompatActivity {
             public void onResponse(Call<Donation> call, Response<Donation> response) {
 
                 if (!response.isSuccessful()) {
-//                    textViewResult.setText("Code: " + response.code());
-                    Toast.makeText(MakingDonation.this, response.code(), Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(MakingDonation.this, "Something went wrong! Error code: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -82,6 +92,7 @@ public class MakingDonation extends AppCompatActivity {
             @Override
             public void onFailure(Call<Donation> call, Throwable t) {
 //                textViewResult.setText(t.getMessage());
+                Toast.makeText(MakingDonation.this, "Something went wrong! Error code: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

@@ -17,6 +17,22 @@
         android:text="Thank you for considering a donation!" />
 
     <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="Enter Your Name:"
+        tools:text="Enter Your Name:" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
+        android:ems="10"
         android:inputType="number" />
 
     <TextView
@@ -40,7 +57,7 @@
         tools:text="Enter Donation Amount (in THB):" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/donationAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
@@ -52,6 +69,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
-        android:text="Button" />
+        android:text="Make Donation" />
 
 </LinearLayout>
