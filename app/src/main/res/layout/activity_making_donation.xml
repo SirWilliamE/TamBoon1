@@ -6,17 +6,52 @@
     tools:context=".MakingDonation"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#283cb9"
+        android:text="Thank you for considering a donation!" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter Credit Card Number"
-        tools:text="Enter Credit Card Number" />
+        android:layout_margin="10sp"
+        android:text="Enter Credit Card Number:"
+        tools:text="Enter Credit Card Number:" />
+
+    <EditText
+        android:id="@+id/cardNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="Enter Donation Amount (in THB):"
+        tools:text="Enter Donation Amount (in THB):" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:ems="10"
         android:inputType="number" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="Button" />
+
 </LinearLayout>

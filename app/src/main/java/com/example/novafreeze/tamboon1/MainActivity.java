@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
@@ -41,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
     }
 
 
@@ -101,47 +96,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-//    private void makeDonation() {
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("https://virtserver.swaggerhub.com/chakritw/tamboon-api/1.0.0/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        CharitiesAPI CharitiesAPI = retrofit.create(CharitiesAPI.class);
-//
-//        Donation donation = new Donation("John Doe", "tokn_test_deadbeef", 100000);
-//
-//        Call<Donation> donationCall = CharitiesAPI.makeDonation(donation);
-//
-//        donationCall.enqueue(new Callback<Donation>() {
-//            @Override
-//            public void onResponse(Call<Donation> call, Response<Donation> response) {
-//
-//                if (!response.isSuccessful()) {
-//                    textViewResult.setText("Code: " + response.code());
-//                    return;
-//                }
-//
-//                Donation donationResponse = response.body();
-//
-//                String donationResult = "";
-//                donationResult += "Code: " + response.code() + "\n";
-//                donationResult += "Successful : " + donationResponse.isSuccess() + "\n";
-//                donationResult += donationResponse.getError_code() + "\n";
-//                donationResult += donationResponse.getError_message() + "\n";
-//
-//                textViewResult.setText(donationResult);
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Donation> call, Throwable t) {
-//                textViewResult.setText(t.getMessage());
-//            }
-//        });
-//
-//    }
 
 }
