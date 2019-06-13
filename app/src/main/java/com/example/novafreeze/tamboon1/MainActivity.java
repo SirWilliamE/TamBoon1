@@ -2,7 +2,9 @@ package com.example.novafreeze.tamboon1;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -11,30 +13,31 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView textViewResult;
+
+    private ListView theListView;
+
+    ArrayList<String> listItems = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewResult = findViewById(R.id.text_view_result);
+        theListView = (ListView) findViewById(R.id.list_view_result);
 
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("https://virtserver.swaggerhub.com/chakritw/tamboon-api/1.0.0/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        CharitiesAPI CharitiesAPI = retrofit.create(CharitiesAPI.class);
-
-
-        makeDonation();
-
-
+        getCharities();
     }
 
     private void getCharities() {
 
+        // Set up the ListView Adapter
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                listItems);
+        theListView.setAdapter(adapter);
+
+        // Build Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://virtserver.swaggerhub.com/chakritw/tamboon-api/1.0.0/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -42,17 +45,18 @@ public class MainActivity extends AppCompatActivity {
 
         CharitiesAPI CharitiesAPI = retrofit.create(CharitiesAPI.class);
 
-        //Retrofit creates the implementation for this method
+        // Retrofit creates the implementation for this method
         Call<Getting> call = CharitiesAPI.getCharities();
 
-
-        //Retrofit provides this method for us to call on a background thread
+        // Retrofit provides this method for us to make the call on a background thread
         call.enqueue(new Callback<Getting>() {
+
             @Override
             public void onResponse(Call<Getting> call, Response<Getting> response) {
 
                 if (!response.isSuccessful()) {
-                    textViewResult.setText("Error Code: " + response.code());
+                    listItems.add("Error Code: " + response.code());
+                    adapter.notifyDataSetChanged();
                     return;
                 }
 
@@ -60,64 +64,66 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Getting.Data> DataList = charities.data;
 
-                //Iterate through responses and append data to the View
+                // Iterate through responses and append data to the View
                 for(Getting.Data charity : DataList) {
                     String content = "";
                     content += "ID: " + charity.getId() + "\n";
                     content += "Name: " + charity.getName() + "\n";
                     content += "Logo: " + charity.getLogo_url() + "\n\n";
-                    textViewResult.append(content);
+
+                    listItems.add(content);
+                    adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(Call<Getting> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
+                listItems.add(t.getMessage());
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
-    private void makeDonation() {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://virtserver.swaggerhub.com/chakritw/tamboon-api/1.0.0/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CharitiesAPI CharitiesAPI = retrofit.create(CharitiesAPI.class);
-
-        Donation donation = new Donation("John Doe", "tokn_test_deadbeef", 100000);
-
-        Call<Donation> donationCall = CharitiesAPI.makeDonation(donation);
-
-        donationCall.enqueue(new Callback<Donation>() {
-            @Override
-            public void onResponse(Call<Donation> call, Response<Donation> response) {
-
-                if (!response.isSuccessful()) {
-                    textViewResult.setText("Code: " + response.code());
-                    return;
-                }
-
-                Donation donationResponse = response.body();
-
-                String donationResult = "";
-                donationResult += "Code: " + response.code() + "\n";
-                donationResult += "Successful : " + donationResponse.isSuccess() + "\n";
-                donationResult += donationResponse.getError_code() + "\n";
-                donationResult += donationResponse.getError_message() + "\n";
-
-                textViewResult.setText(donationResult);
-
-            }
-
-            @Override
-            public void onFailure(Call<Donation> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
-
-
-    }
+//    private void makeDonation() {
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("https://virtserver.swaggerhub.com/chakritw/tamboon-api/1.0.0/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        CharitiesAPI CharitiesAPI = retrofit.create(CharitiesAPI.class);
+//
+//        Donation donation = new Donation("John Doe", "tokn_test_deadbeef", 100000);
+//
+//        Call<Donation> donationCall = CharitiesAPI.makeDonation(donation);
+//
+//        donationCall.enqueue(new Callback<Donation>() {
+//            @Override
+//            public void onResponse(Call<Donation> call, Response<Donation> response) {
+//
+//                if (!response.isSuccessful()) {
+//                    textViewResult.setText("Code: " + response.code());
+//                    return;
+//                }
+//
+//                Donation donationResponse = response.body();
+//
+//                String donationResult = "";
+//                donationResult += "Code: " + response.code() + "\n";
+//                donationResult += "Successful : " + donationResponse.isSuccess() + "\n";
+//                donationResult += donationResponse.getError_code() + "\n";
+//                donationResult += donationResponse.getError_message() + "\n";
+//
+//                textViewResult.setText(donationResult);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Donation> call, Throwable t) {
+//                textViewResult.setText(t.getMessage());
+//            }
+//        });
+//
+//    }
 
 }

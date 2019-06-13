@@ -1,9 +1,5 @@
 package com.example.novafreeze.tamboon1;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -17,5 +13,4 @@ public interface CharitiesAPI {
 
     @POST("donations")
     Call<Donation> makeDonation(@Body Donation donation);
-
 }
