@@ -1,9 +1,14 @@
 package com.example.novafreeze.tamboon1;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
@@ -27,7 +32,20 @@ public class MainActivity extends AppCompatActivity {
         theListView = (ListView) findViewById(R.id.list_view_result);
 
         getCharities();
+
+        theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Could include if statements here to check for which charity was clicked, then putExtra
+                Intent intent = new Intent(MainActivity.this, MakingDonation.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
+
 
     private void getCharities() {
 
