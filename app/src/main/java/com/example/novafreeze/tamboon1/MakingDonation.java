@@ -1,5 +1,6 @@
 package com.example.novafreeze.tamboon1;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -30,23 +31,22 @@ public class MakingDonation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_making_donation);
 
-        cardNumber = (EditText) findViewById(R.id.cardNumber);
-        donationAmount = (EditText) findViewById(R.id.donationAmount);
-        name = (EditText) findViewById(R.id.name);
+        cardNumber = findViewById(R.id.cardNumber);
+        donationAmount = findViewById(R.id.donationAmount);
+        name = findViewById(R.id.name);
 
-        submitButton = (Button) findViewById(R.id.button);
+        submitButton = findViewById(R.id.button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makeDonation();
+
+                Intent intent = new Intent(MakingDonation.this, SuccessActivity.class);
+                startActivity(intent);
             }
         });
 
     }
-
-
-
-
 
     private void makeDonation() {
 
@@ -80,26 +80,18 @@ public class MakingDonation extends AppCompatActivity {
                 String donationResult = "";
                 donationResult += "Code: " + response.code() + "\n";
                 donationResult += "Successful : " + donationResponse.isSuccess() + "\n";
-                donationResult += donationResponse.getError_code() + "\n";
-                donationResult += donationResponse.getError_message() + "\n";
+//                donationResult += donationResponse.getError_code() + "\n";
+//                donationResult += donationResponse.getError_message() + "\n";
 
-//                textViewResult.setText(donationResult);
                 Toast.makeText(MakingDonation.this, donationResult, Toast.LENGTH_LONG).show();
-
-
             }
 
             @Override
             public void onFailure(Call<Donation> call, Throwable t) {
-//                textViewResult.setText(t.getMessage());
                 Toast.makeText(MakingDonation.this, "Something went wrong! Error code: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
     }
-
-
-
-
 
 }
